@@ -4,9 +4,11 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.client.builder.AwsClientBuilder.*;
 import com.amazonaws.regions.Regions;
 
 import org.springframework.boot.SpringApplication;
@@ -45,12 +47,14 @@ public class Application
 		AmazonDynamoDB client = createDynamoDBClient();
 		DynamoDB ddb = new DynamoDB(client);
 		Table roomTable = ddb.getTable("room");
-		roomTable.scan();
+		ItemCollection<ScanOutcome> rooms = roomTable.scan();
 		
-//		roomTable.
+		StringBuffer returnVal = new StringBuffer();
 		
-		String returnVal = "test";
-		return returnVal;
+		for (Item item: rooms) {
+			returnVal.append( item );
+		}
+		return returnVal.toString();
 	}
 	
 	@PostMapping(value = "/api/createRoom", consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"} )
@@ -63,8 +67,6 @@ public class Application
 			return HttpStatus.ACCEPTED;
 		} else {
 			
-			System.out.println(room);
-
 			return HttpStatus.BAD_REQUEST;
 		}
 	}
@@ -79,20 +81,22 @@ public class Application
 			return HttpStatus.ACCEPTED;
 		} else {
 			
-			System.out.println(room);
-
 			return HttpStatus.BAD_REQUEST;
 		}
 	}
 	
 	@PostMapping( value = "/api/updateRoom", consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"} )
-	public HttpStatus updateRoom(String id, String occupant) {
-		if ( id != null && occupant != null) {
-			
-			//TODO get room based on provided ID and update with provided occupant
-			Room room = new Room();
-			System.out.println(room.toString());
-			return HttpStatus.ACCEPTED;
+	public HttpStatus updateRoom(@RequestBody Room newRoom) {
+		if ( newRoom.getId() != null && newRoom.getOccupant() != null) {
+			DynamoDBMapper mapper = createMapper();
+			Room r = mapper.load(newRoom);
+			if (r != null) {
+				r.setOccupant(newRoom.getOccupant());
+				mapper.save(r);
+				return HttpStatus.ACCEPTED;
+			} else {
+				return HttpStatus.BAD_REQUEST;
+			}
 		} else {
 			return HttpStatus.BAD_REQUEST;
 		}
