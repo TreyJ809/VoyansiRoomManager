@@ -12,6 +12,7 @@ import com.amazonaws.regions.Regions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +45,7 @@ public class Application
 		AmazonDynamoDB client = createDynamoDBClient();
 		DynamoDB ddb = new DynamoDB(client);
 		Table roomTable = ddb.getTable("room");
-		roomTable.scan()
+		roomTable.scan();
 		
 //		roomTable.
 		
@@ -66,7 +67,22 @@ public class Application
 
 			return HttpStatus.BAD_REQUEST;
 		}
+	}
+		
+	@DeleteMapping(value = "/api/deleteRoom", consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"} )
+	public HttpStatus deleteRoom(@RequestBody Room room) {
 
+		if ( room.getId() != null) {
+			DynamoDBMapper mapper = createMapper();
+			mapper.delete(room);
+			
+			return HttpStatus.ACCEPTED;
+		} else {
+			
+			System.out.println(room);
+
+			return HttpStatus.BAD_REQUEST;
+		}
 	}
 	
 	@PostMapping( value = "/api/updateRoom", consumes = {"application/json", "application/xml"}, produces = {"application/json", "application/xml"} )

@@ -23,7 +23,7 @@ curl -H "Content-type:application/json"  -d "{\"id\" : \"insertRoomId\", \"name\
 Sample DELETE request (deleteRoom) via Curl
 
 ```
-curl -H "Content-type:application/json"  -d "{\"id\" : \"insertRoomId\"}" http://localhost:8080/api/createRoom
+curl -X DELETE http://localhost:8080/api/deleteRoom  -H "Content-type:application/json" -d "{\"id\" : \"insertRoomId\"}"
 ```
 
 Build and run with Docker Compose
