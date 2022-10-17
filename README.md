@@ -14,6 +14,12 @@ Run JAR
 java -jar target\VoyansiRoomManager-1.0-SNAPSHOT.jar
 ```
 
+GET request URL (get list of all rooms and details)
+
+```
+http://voyansiroommanagerbeanstalk-env-1.eba-7hq2gey4.us-east-1.elasticbeanstalk.com/api/rooms
+```
+
 Sample POST request (createRoom) via Curl
 
 ```
