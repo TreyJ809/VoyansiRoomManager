@@ -17,19 +17,19 @@ java -jar target\VoyansiRoomManager-1.0-SNAPSHOT.jar
 Sample POST request (createRoom) via Curl
 
 ```
-curl -H "Content-type:application/json"  -d "{\"id\" : \"insertRoomId\", \"name\" : \"insertRoomName\", \"number\" : \"insertRoomNumber\", \"occupant\" : \"insertOccupant\"}" http://localhost:8080/api/createRoom
+curl -H "Content-type:application/json"  -d "{\"id\" : \"newRoomId\", \"name\" : \"insertRoomName\", \"number\" : \"insertRoomNumber\", \"occupant\" : \"insertOccupant\"}" http://voyansiroommanagerbeanstalk-env-1.eba-7hq2gey4.us-east-1.elasticbeanstalk.com/api/createRoom
 ```
 
 Sample PUT request (updateRoom) via Curl
 
 ```
-curl -X PUT -H "Content-type:application/json"  -d "{\"id\" : \"insertRoomId\", \"occupant\" : \"newOccupant\"}" http://localhost:8080/api/updateRoom
+curl -X PUT -H "Content-type:application/json"  -d "{\"id\" : \"insertRoomId\", \"occupant\" : \"newOccupant\"}" http://voyansiroommanagerbeanstalk-env-1.eba-7hq2gey4.us-east-1.elasticbeanstalk.com/api/updateRoom
 ```
 
 Sample DELETE request (deleteRoom) via Curl
 
 ```
-curl -X DELETE http://localhost:8080/api/deleteRoom  -H "Content-type:application/json" -d "{\"id\" : \"insertRoomId\"}"
+curl -X DELETE http://voyansiroommanagerbeanstalk-env-1.eba-7hq2gey4.us-east-1.elasticbeanstalk.com/api/deleteRoom  -H "Content-type:application/json" -d "{\"id\" : \"insertRoomId\"}"
 ```
 
 Build and run with Docker Compose
