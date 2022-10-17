@@ -44,6 +44,7 @@ public class Application
 		AmazonDynamoDB client = createDynamoDBClient();
 		DynamoDB ddb = new DynamoDB(client);
 		Table roomTable = ddb.getTable("room");
+		roomTable.scan()
 		
 //		roomTable.
 		
