@@ -44,3 +44,11 @@ Build and run with Docker Compose
 docker-compose build
 docker-compose up
 ```
+
+Note that the application needs to be set to Port 5000 because AWS Elastic Beanstalk uses Nginx webserver that forwards requests to port 5000. Adding the following to the Elastic Beanstalk configurations sets the port as needed.
+
+```
+Name = SERVER_PORT : Value 5000
+```
+
+Alternatively the Port can be set in the application properties file
