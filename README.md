@@ -1,6 +1,9 @@
 # VoyansiRoomManager
 Sample Room Manager API for Voyansi
 
+```
+NOT currently deployed or running
+```
 
 Build JAR
 
